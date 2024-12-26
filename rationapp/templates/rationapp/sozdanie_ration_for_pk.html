@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/sozdanie_ration_for_pk.css' %}">
+    <title>Создание рациона</title>
+</head>
+<body>
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+                <!-- menu_link -->
+            </div>
+            <div class="page-name">
+                <span class="page-name__title">{{form_ration_name}}</span>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <form name="newRacionForm" method="post" class="main-form" action="/pk" id="newRacionForm">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr align="center" class="title-block">
+                            <td class="title-block__text main-column" rowspan="2">Пищевая композиция</td>
+                            <td class="title-block__text" colspan="28">Нутриенты</td>
+                        </tr>
+                        <tr class="title-block" align="center">
+                            <td class="title-block__text weight-cell">Вес</td>
+                            <td class="title-block__text water-cell" >Вода</td>
+                            <td class="title-block__text protein-cell">Бел</td>
+                            <td class="title-block__text fat-cell">Жир</td>
+                            <td class="title-block__text nshk-cell">НЖК</td>
+                            <td class="title-block__text hol-cell">Хол</td>
+                            <td class="title-block__text mds-cell">МДС</td>
+                            <td class="title-block__text kp-cell">Кр</td>
+                            <td class="title-block__text ugl-cell">Угл</td>
+                            <td class="title-block__text pv-cell">ПВ</td>
+                            <td class="title-block__text ok-cell">ОК</td>
+                            <td class="title-block__text ash-cell">Зола</td>
+                            <td class="title-block__text na-cell">Na</td>
+                            <td class="title-block__text k-cell">K</td>
+                            <td class="title-block__text ca-cell">Ca</td>
+                            <td class="title-block__text mg-cell">Mg</td>
+                            <td class="title-block__text p-cell">P</td>
+                            <td class="title-block__text fe-cell">Fe</td>
+                            <td class="title-block__text a-cell">A</td>
+                            <td class="title-block__text kar-cell">Кар</td>
+                            <td class="title-block__text pe-cell">РЭ</td>
+                            <td class="title-block__text te-cell">ТЭ</td>
+                            <td class="title-block__text b1-cell">B1</td>
+                            <td class="title-block__text b2-cell">B2</td>
+                            <td class="title-block__text pp-cell">PP</td>
+                            <td class="title-block__text ne-cell">НЭ</td>
+                            <td class="title-block__text c-cell">C</td>
+                            <td class="title-block__text ec-cell">ЭЦ</td>
+                        </tr>
+                        <tr align="center" class="title-select">
+                            <td class="title-select__ingredients" colspan="29">Выбранные ингредиенты</td>
+                        </tr>
+                        <tr class="food-composition" align="center">
+                            <td class="food-composition__total ">Итого:</td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                    </thead>
+                    <tr align="center" class="title-ingredient">
+                        <td class="title-ingredient__block" colspan="29">
+                            <div class="title-ingredient__flex">
+                                <input type="checkbox" class="title-ingredient__checkbox">
+                                <div class="title-ingredient__title">Молоко и молочные продукты</div>
+                            </div>
+                        </td>
+                    </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Молоко пастеризованное нежирное</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Молоко топленое 1,0 % жирности</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Молоко топленое нежирное</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Молоко белковое</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Пахта "Идеал" пастеризованная</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                    <tr align="center" class="title-ingredient">
+                        <td class="title-ingredient__block" colspan="29">
+                            <div class="title-ingredient__flex">
+                                <input type="checkbox" class="title-ingredient__checkbox">
+                                <div class="title-ingredient__title">Кисломолочные продукты</div>
+                            </div>
+                        </td>
+                    </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Ацидофилин нежирный</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Ацидофилин 1,0 % жирности</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                        <tr align="center" class="food-composition">
+                            <td class="food-composition__title composition-title-field">
+                                <div class="composition-title-field__flex">
+                                    <input type="checkbox" class="composition-title-field__checkbox">
+                                    <div class="composition-title-field__text">Кефир нежирный</div>
+                                </div>
+                            </td>
+                            <td><input type="number" class="weight-cell"></td>
+                            <td><input disabled value="100" type="number" class="water-cell"></td>
+                            <td><input disabled value="98" type="number" class="protein-cell"></td>
+                            <td><input disabled value="97" type="number" class="fat-cell"></td>
+                            <td><input disabled value="96" type="number" class="nshk-cell"></td>
+                            <td><input disabled value="100" type="number" class="hol-cell"></td>
+                            <td><input disabled value="100" type="number" class="mds-cell"></td>
+                            <td><input disabled value="100" type="number" class="kp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ugl-cell"></td>
+                            <td><input disabled value="100" type="number" class="pv-cell"></td>
+                            <td><input disabled value="100" type="number" class="ok-cell"></td>
+                            <td><input disabled value="100" type="number" class="ash-cell"></td>
+                            <td><input disabled value="100" type="number" class="na-cell"></td>
+                            <td><input disabled value="100" type="number" class="k-cell"></td>
+                            <td><input disabled value="100" type="number" class="ca-cell"></td>
+                            <td><input disabled value="100" type="number" class="mg-cell"></td>
+                            <td><input disabled value="100" type="number" class="p-cell"></td>
+                            <td><input disabled value="100" type="number" class="fe-cell"></td>
+                            <td><input disabled value="100" type="number" class="a-cell"></td>
+                            <td><input disabled value="100" type="number" class="kar-cell"></td>
+                            <td><input disabled value="100" type="number" class="pe-cell"></td>
+                            <td><input disabled value="100" type="number" class="te-cell"></td>
+                            <td><input disabled value="100" type="number" class="b1-cell"></td>
+                            <td><input disabled value="100" type="number" class="b2-cell"></td>
+                            <td><input disabled value="100" type="number" class="pp-cell"></td>
+                            <td><input disabled value="100" type="number" class="ne-cell"></td>
+                            <td><input disabled value="100" type="number" class="c-cell"></td>
+                            <td><input disabled value="100" type="number" class="ec-cell"></td>
+                        </tr>
+                </table>
+                <div class="submit-block">
+                    <button type="submit" class="submit-block__button">Продолжить</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'JS/sozdanie_ration_for_pk.js' %}"></script>
+</body>
+</html>

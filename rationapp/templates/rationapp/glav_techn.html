@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/glav_techn.css' %}">
+    <link rel="shortcut icon" href="#">
+    <title>Окно создания</title>
+</head>
+<body>   
+    <header></header>
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            <!-- menu_link -->
+            </div>
+            <div class="page-name">
+                <!-- <span class="page-name__title">Изменение диеты</span> -->
+                <img src="{% static 'img/profile.png' %}" alt="profile" class="page-name__img">
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <div class="racion">
+                <div class="prohibited-ingredients">
+                    <div class="racion__main-block block-main">
+                        <a href="ration" class="block-main__subblock">Создать рацион</a>
+                    </div>
+                    <div class="choise-block">
+                        {% for rat in rations %}
+                        <div class="racion__child-block block-child">
+                            <div class="block-child__subblock data">{{rat.name}}</div>
+                            <div class="racion__hidden-block block-hidden" style="display:none">
+                                <div class="block-hidden__text">
+                                    <p>{{rat.description}}</p>
+                                    {% if rat.selected_ingredients %}
+                                        <p>Ограничения:</p>
+                                        <ul>
+                                        {% for ingredient in rat.selected_ingredients %}
+                                            <li>{{ ingredient }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="block-hidden__date">{{rat.date}}</div>
+                                {% if rat.id_ration %}
+                                    <a href="{% url 'delete_ration' ration_id=rat.id_ration %}" class="delete-btn">Удалить</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="food-composition">
+                <div class="prohibited-ingredients">
+                    <div class="food-composition__main-block block-main">
+                        <a class="block-main__subblock" href="{% url 'create_pk' %}">Создать пищевую композицию</a>
+                    </div>
+                    <div class="choise-block">
+                        <div href="" class="food-composition__child-block  block-child">
+                            <div class="block-child__subblock">Завтрак</div>
+                            <!-- <div class="food-composition__hidden-block block-hidden" style="display:none">
+                                 <div class="block-hidden__text">Краткая информация о ПК</div> -->
+                                <!-- <div class="block-hidden__date"></div>  
+                            </div> -->
+                        </div>
+                            <div class="food-composition__child-block  block-child">
+                            <div class="block-child__subblock">Обед</div>
+                            <!-- <div class="food-composition__hidden-block block-hidden" style="display:none">
+                                <div class="block-hidden__text">Краткая информация о рационе</div>
+                                <div class="block-hidden__date"></div> 
+                            </div> -->
+                        </div>
+                        <div class="food-composition__child-block  block-child">
+                            <div class="block-child__subblock">Полдник</div>
+                            <!-- <div class="food-composition__hidden-block block-hidden" style="display:none">
+                                <div class="block-hidden__text">Краткая информация о рационе</div>
+                                <div class="block-hidden__date"></div> 
+                            </div> -->
+                        </div>
+                        <div class="food-composition__child-block  block-child">
+                            <div class="block-child__subblock">Ужин</div>
+                            <!-- <div class="food-composition__hidden-block block-hidden" style="display:none">
+                                <div class="block-hidden__text">Краткая информация о рационе</div>
+                                <div class="block-hidden__date"></div> 
+                            </div>-->
+                        </div> 
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'JS/glav_techn.js' %}"></script>
+</body> 
+</html>

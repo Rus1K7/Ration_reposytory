@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/medical_restrictions.css' %}">
+    <title>Медицинские ограничения</title>
+</head>
+<body>
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            <!-- menu_link -->
+            </div>
+            <div class="page-name">
+                <span class="page-name__title" name="ration-name">{{form_ration_name}}</span>
+            </div>
+            <div class="big-title">МЕДИЦИНСКИЕ ОГРАНИЧЕНИЯ</div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+        <form>
+            <div class="prohibited-ingredients">
+                  <form class="tables" method="post">
+                      <div id="first" class="block">
+                        <input class="a poisk" type="text" name="text" placeholder="Поиск болезни" maxlength="45"><br>
+                        <div class="ingredients-block">
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_1"><label for="check_1">Диабет</label><br>
+                                <hr><br>
+                            </div> 
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_2"><label for="check_2">Заболевание желудочно-кишечного тракта</label><br>
+                                <hr><br>
+                            </div>
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_3"><label for="check_3">Болезнь почек</label><br>
+                                <hr><br>
+                            </div>
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_4"><label for="check_4">Заболевание 1</label><br>
+                                <hr><br>
+                            </div>
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_5"><label for="check_5">Заболевание 2</label><br>
+                                <hr><br>
+                            </div>
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_6"><label for="check_6">Заболевание 3</label><br>
+                                <hr><br>
+                            </div>
+                            <div class="Ch">
+                                <input class="left right" type="checkbox" name="check_7"><label for="check_7">Заболевание 4</label><br>
+                                <hr><br>
+                            </div>
+                        </div>
+                        <br>
+                      </div>
+                
+                
+                      <div id="second" class="block" class="a">
+                        <span class="a2">ВЫБРАННЫЕ ОГРАНИЧЕНИЯ:</span><hr><br>
+                        <div class="ingredients-block">
+                            <div class="selected-ingredients__invisible">
+                                <div class="selected-ingredients__text">Ничего не выбрано</div>
+                            </div>
+                        </div>
+                      </div>
+                
+                      <div id="third" class="block">
+                        <input class="a" type="text" placeholder="Название болезни">
+                        <hr>
+                        <textarea name="name" class="b" id="description" type ="text" value="" rows="2" placeholder="Особенности"></textarea>
+                        <button name="button" class="button2 button__text2">
+                            Добавить
+                        </button>
+                      </div>
+                    </form>
+            </div>
+                <a href="javascript:history.back()" name="button" class="button button__text">
+                    Сохранить
+                </a>
+        </form>
+    </div>
+    </main>
+    <script src="{% static 'JS/medical_restrictions.js' %}"></script>
+</body>
+</html>

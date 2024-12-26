@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/bas_inf_about_ration.css' %}">
+    <title>Создание рациона</title>
+</head>
+<body>   
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            <!-- menu_link -->
+            </div>
+            <div class="page-name">
+                <span class="page-name__title">Новый рацион</span>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            {% comment %} Важное доопределить action {% endcomment %}
+            <form name="newRacionForm" method="POST" class="main-form">
+                {% csrf_token %}
+                <div class="first-block">
+                    <input type="text" class="first-block__text" placeholder="Название рациона" name="ration-name" required>
+                    <input type="text" class="first-block__text" placeholder="Название организации заказчика" name="organisation-name" required>
+                </div>
+                <div class="second-block">
+                    <span class="second-block__title">Описание</span>
+                    <textarea class="second-block__textarea" placeholder="Описание рациона" name="Ration-textarea" required></textarea>
+                </div>
+                <div class="third-block">
+                    <div class="third-block__left-block block-parametr">
+                        <div class="block-parametr__amount">
+                            <span class="block-parametr__title">Количество дней в рационе</span>
+                            <select class="block-parametr__list racion-days" name="count-ration-date" required>
+                                <option value="" disabled selected>0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="block-parametr__date-block">
+                            <span class="block-parametr__title">Дата рациона</span>
+                            <input type="date" class="block-parametr__list calendar" name="calendar-date" required>
+                        </div> 
+                    </div>
+                    <div class="third-block__right-block block-parametr">
+                        <div class="block-parametr__meal-block">
+                            <span class="block-parametr__title">Количество приемов пищи в день</span>
+                            <input type="number" min="0" class="block-parametr__list meal-count" name="count-meal-days" required>
+                            <!--
+                            {% comment %} <select class="block-parametr__list meal-count" name="count-meal-days" required>
+                                <option>7 (1 неделя)</option>
+                                <option>14 (2 недели)</option>
+                                <option>21 (3 недели)</option>
+                                <option>28 (4 недели)</option>
+                                <option>35 (5 недель)</option>
+                                <option>42 (6 недель)</option>
+                                <option>49 (7 недель)</option>
+                                <option>56 (8 недель)</option>
+                                <option>63 (9 недель)</option>
+                                <option>70 (10 недель)</option>
+                                <option>77 (11 недель)</option>
+                                <option>84 (12 недель)</option>
+                                <option>91 (13 недель)</option>
+                                <option>98 (14 недель)</option>
+                                <option>105 (15 недель)</option>
+                                <option>112 (16 недель)</option>
+                            </select> {% endcomment %}
+                        -->
+                        </div>
+                        <div class="block-parametr__tech-block">
+                            <span class="block-parametr__title">Технолог:</span>
+                            <select class="block-parametr__list name-tech" name="technologist" required>
+                                <option value="" disabled selected>Выберите технолога</option>
+                                <option value="first">Светлана</option>
+                                <option value="second">Георгий</option>
+                                <option value="third">Вероника</option>
+                                <option value="fourth">Владимир</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="subblock-button">
+                    <button type="submit" class="subblock-button__button">Продолжить</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'JS/bas_inf_about_ration.js' %}"></script>
+</body>
+</html>
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'CSS/vhod.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="/main" class="menu__link" tabindex="1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="2">Рационы</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="3">О нас</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="4">Контакты</a>
+                </div>
+                <img src="{% static 'img/trubka.png' %}" alt="" class="menu__img menu__img_margin-88">
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <div class="prohibited-ingredients">
+                <div class="container">
+                    <label class="a">Вход</label> <br><br>
+                </div>
+                <div class="container2">
+                    <form method="POST" id="login-form">
+                        {% csrf_token %}
+                        <input type="text" class="p1" placeholder="Имя пользователя" width="200px" maxlength="45" name="username" id="FIO" > <br><br>
+                        <input type="password" class="p2" placeholder="Пароль" maxlength="15" name="password" id="password" > <br><br>
+                        <span class="pass-icon" id="pass-icon"><img class="pass-icon2" src="{% static 'img/eye.png' %}" alt="Показать пароль"></span>
+                        <br><br>
+                    </form>
+                </div>
+                <div class="container3">
+                    <button type="submit" class="button button-blue" id="login-button">Войти</button>
+                    <form action="{% url 'registration' %}">
+                        <button class="button2 button-white">Регистрация</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="Modal" id="myModal">
+            <div class="Modal-Window">
+                <h1>Неверное имя пользователя или пароль</h1>
+                <button class="btn-close" id="close-modal">X</button>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'JS/vhod.js' %}"></script>
+</body>
+</html>

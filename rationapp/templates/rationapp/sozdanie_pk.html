@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/sozdanie_pk.css' %}">
+    <title>Создание пк</title>
+</head>
+<body> 
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="{% url 'main' %}" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            </div>
+        </div>
+    </nav>
+        <main>
+            <div class="wrapper">
+                {% comment %} <form name="newPKForm" method="post" class="main-form" action="/" id="newPKForm"> {% endcomment %}
+                    {% csrf_token %}
+                    
+                   
+                {% comment %} </form> {% endcomment %}
+		<form id="ingredientForm" name="newPKpopupForm" method="post" class="main-form" action="/main/" id="newPKpopupForm" enctype="multipart/form-data" onsubmit="collectData()">
+                    <div class="block-string">
+                        <input name="name_pc" type="text" class="block-string__string" placeholder="Название пищевой композиции">
+                    </div>
+                    <div   class="block-title">ОПИСАНИЕ</div>
+                    <div class="block-textarea" >
+                        <textarea name="description_pc" class="block-textarea__text-area" placeholder="Введите описание здесь"></textarea>
+                    </div>
+                    <div class="block-update">
+                        <div class="block-update__plus">Выбрать ингредиенты</div>
+                    <a href="#popup"><div class="block-update__sign"></div></a>    
+                               
+                </div>
+                    {% csrf_token %}
+                    <div class="block-subtitle">Выбранные ингредиенты:</div>
+                    <div class="block-select" onchange="autoFillMessage(this)" name="selected-list">
+                        <div class = "thereIsNothing">Ничего не выбрано</div>
+                    </div>
+                    
+                    <div class="subblock-button">
+                        <button type="submit" class="subblock-button__button" name = "pk_button">Готово</button>                
+                    </div>
+                    
+                    {% csrf_token %}
+                    <div class="popup" id="popup">
+                        <div class="popup__body">
+                            <div class="popup__content">
+                                <table>
+                                    <thead>
+                                        <tr align="center" class="title-block">
+                                            <td class="title-block__text main-column" rowspan="2">Пищевая композиция</td>
+                                            <td class="title-block__text hoho" colspan="28">Нутриенты</td>
+                                        </tr>
+                                        <tr class="title-block" align="center">
+                                            <td class="title-block__text weight-cell">Вес</td>
+                                            <td class="title-block__text water-cell" >Вода</td>
+                                            <td class="title-block__text protein-cell">Бел</td>
+                                            <td class="title-block__text fat-cell">Жир</td>
+                                            <td class="title-block__text nshk-cell">НЖК</td>
+                                            <td class="title-block__text hol-cell">Хол</td>
+                                            <td class="title-block__text mds-cell">МДС</td>
+                                            <td class="title-block__text kp-cell">Кр</td>
+                                            <td class="title-block__text ugl-cell">Угл</td>
+                                            <td class="title-block__text pv-cell">ПВ</td>
+                                            <td class="title-block__text ok-cell">ОК</td>
+                                            <td class="title-block__text ash-cell">Зола</td>
+                                            <td class="title-block__text na-cell">Na</td>
+                                            <td class="title-block__text k-cell">K</td>
+                                            <td class="title-block__text ca-cell">Ca</td>
+                                            <td class="title-block__text mg-cell">Mg</td>
+                                            <td class="title-block__text p-cell">P</td>
+                                            <td class="title-block__text fe-cell">Fe</td>
+                                            <td class="title-block__text a-cell">A</td>
+                                            <td class="title-block__text kar-cell">Кар</td>
+                                            <td class="title-block__text pe-cell">РЭ</td>
+                                            <td class="title-block__text te-cell">ТЭ</td>
+                                            <td class="title-block__text b1-cell">B1</td>
+                                            <td class="title-block__text b2-cell">B2</td>
+                                            <td class="title-block__text pp-cell">PP</td>
+                                            <td class="title-block__text ne-cell">НЭ</td>
+                                            <td class="title-block__text c-cell">C</td>
+                                            <td class="title-block__text ec-cell">ЭЦ</td>
+                                        </tr>
+                                        <tr align="center" class="title-select">
+                                            <td class="title-select__ingredients" colspan="29">Выбранные ингредиенты</td>
+                                        </tr>
+                                        <tr class="composition-total" align="center">
+                                            <td class="composition-total__text">Итого:</td>
+                                            <td><input type="number" class="weight-cell" disabled></td>
+                                            <td><input disabled type="number" class="water-cell"></td>
+                                            <td><input disabled type="number" class="protein-cell"></td>
+                                            <td><input disabled type="number" class="fat-cell"></td>
+                                            <td><input disabled type="number" class="nshk-cell"></td>
+                                            <td><input disabled type="number" class="hol-cell"></td>
+                                            <td><input disabled type="number" class="mds-cell"></td>
+                                            <td><input disabled type="number" class="kp-cell"></td>
+                                            <td><input disabled type="number" class="ugl-cell"></td>
+                                            <td><input disabled type="number" class="pv-cell"></td>
+                                            <td><input disabled type="number" class="ok-cell"></td>
+                                            <td><input disabled type="number" class="ash-cell"></td>
+                                            <td><input disabled type="number" class="na-cell"></td>
+                                            <td><input disabled type="number" class="k-cell"></td>
+                                            <td><input disabled type="number" class="ca-cell"></td>
+                                            <td><input disabled type="number" class="mg-cell"></td>
+                                            <td><input disabled type="number" class="p-cell"></td>
+                                            <td><input disabled type="number" class="fe-cell"></td>
+                                            <td><input disabled type="number" class="a-cell"></td>
+                                            <td><input disabled type="number" class="kar-cell"></td>
+                                            <td><input disabled type="number" class="pe-cell"></td>
+                                            <td><input disabled type="number" class="te-cell"></td>
+                                            <td><input disabled type="number" class="b1-cell"></td>
+                                            <td><input disabled type="number" class="b2-cell"></td>
+                                            <td><input disabled type="number" class="pp-cell"></td>
+                                            <td><input disabled type="number" class="ne-cell"></td>
+                                            <td><input disabled type="number" class="c-cell"></td>
+                                            <td><input disabled type="number" class="ec-cell"></td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                            {% for general in generals %}
+                                            {% if not general.ingredients.exists %}
+                                            <tr align="center" class="title-ingredient">
+                                                <td class="title-ingredient__block" colspan="29">
+                                                    <div class="title-ingredient__flex">
+                                                        <input type="checkbox" class="title-ingredient__checkbox">
+                                                        <div class="title-ingredient__title">{{ general.name }}</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if general.ingredients.exists %}
+                                            <tr align="center" class="food-composition">
+                                                <td class="food-composition__title composition-title-field">
+                                                    <div class="composition-title-field__flex">
+                                                        <input type="checkbox" class="composition-title-field__checkbox">
+                                                        <div class="composition-title-field__text">{{ general.name }}</div>
+                                                    </div>
+                                                </td>
+                                                <td><input type="number" class="weight-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.water }}" type="number" class="water-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.protein }}" type="number" class="protein-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.fat }}" type="number" class="fat-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.nlc }}" type="number" class="nshk-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.chol }}" type="number" class="hol-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.mds }}" type="number" class="mds-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.kr }}" type="number" class="kp-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.carb }}" type="number" class="ugl-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.pv }}" type="number" class="pv-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.ok }}" type="number" class="ok-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.ash }}" type="number" class="ash-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.na }}" type="number" class="na-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.k }}" type="number" class="k-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.ca }}"type="number" class="ca-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.mg }}" type="number" class="mg-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.p }}" type="number" class="p-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.fe }}" type="number" class="fe-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.a }}" type="number" class="a-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.kar }}" type="number" class="kar-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.re }}" type="number" class="pe-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.te }}" type="number" class="te-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.b1 }}" type="number" class="b1-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.b2 }}" type="number" class="b2-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.pp }}" type="number" class="pp-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.ne }}" type="number" class="ne-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.c }}" type="number" class="c-cell"></td>
+                                                <td><input disabled value="{{ general.ingredients.first.ec }}" type="number" class="ec-cell"></td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                    </tbody>
+
+
+                                        
+                                <div class="submit-block">
+                                    <a href="#body">
+                                        <button type="button" class="submit-block__button" name = "pk_popup_button">Продолжить</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer></footer>
+        <script src="{% static 'JS/sozdanie_pk.js' %}"></script>
+</body>
+</html>

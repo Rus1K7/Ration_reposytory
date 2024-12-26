@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/sozdanie_ration.css' %}">
+    <title>Создание рациона</title>
+</head>
+<body>
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+                <!-- menu_link -->
+            </div>
+            <div class="page-name">
+                <span class="page-name__title">{{form_ration_name}}</span>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <form name="newRacionForm" method="post" class="main-form" id="newRacionForm">
+                {% csrf_token %}
+                <table id="foodTable" border="1">
+                    <thead>
+                        <tr align="center" class="title-block">
+                            <td class="title-block__text main-column" rowspan="2">Приём пищи</td>
+                            <td class="title-block__text" colspan="28">Нутриенты</td>
+                        </tr>
+                        <tr class="title-block" style="width: 50px;" align="center">
+                            <td class="title-block__text td_weight weight-cell">Вес</td>
+                            <td class="title-block__text td_weight water-cell">Вода</td>
+                            <td class="title-block__text td_weight protein-cell">Бел</td>
+                            <td class="title-block__text td_weight fat-cell">Жир</td>
+                            <td class="title-block__text td_weight nshk-cell">НЖК</td>
+                            <td class="title-block__text td_weight hol-cell">Хол</td>
+                            <td class="title-block__text td_weight mds-cell">МДС</td>
+                            <td class="title-block__text td_weight kp-cell">Кр</td>
+                            <td class="title-block__text td_weight ugl-cell">Угл</td>
+                            <td class="title-block__text td_weight pv-cell">ПВ</td>
+                            <td class="title-block__text td_weight ok-cell">ОК</td>
+                            <td class="title-block__text td_weight ash-cell">Зола</td>
+                            <td class="title-block__text td_weight na-cell">Na</td>
+                            <td class="title-block__text td_weight k-cell">K</td>
+                            <td class="title-block__text td_weight ca-cell">Ca</td>
+                            <td class="title-block__text td_weight mg-cell">Mg</td>
+                            <td class="title-block__text td_weight p-cell">P</td>
+                            <td class="title-block__text td_weight fe-cell">Fe</td>
+                            <td class="title-block__text td_weight a-cell">A</td>
+                            <td class="title-block__text td_weight kar-cell">Кар</td>
+                            <td class="title-block__text td_weight pe-cell">РЭ</td>
+                            <td class="title-block__text td_weight te-cell">ТЭ</td>
+                            <td class="title-block__text td_weight b1-cell">B1</td>
+                            <td class="title-block__text td_weight b2-cell">B2</td>
+                            <td class="title-block__text td_weight pp-cell">PP</td>
+                            <td class="title-block__text td_weight ne-cell">НЭ</td>
+                            <td class="title-block__text td_weight c-cell">C</td>
+                            <td class="title-block__text td_weight ec-cell">ЭЦ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div oninput="dayn()" id="day1" class="day">
+                            <tr align="center" class="title-date">
+                                <td class="title-date__datetime" colspan="29">День 1 / 27.12.2024</td>
+                            </tr>
+                            <!-- ***** ДЕНЬ 1 ***** -->
+                            <tr align="center" class="food-composition" id="id1">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Завтрак -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Завтрак</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <!-- Реальные значения (примерные) для ~100 г -->
+                                <td><input oninput="multiply()" disabled value="75" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="6" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="14" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="40" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="80" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="40" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="130" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.8" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="150" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="500" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.3" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.1" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.8" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="160" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id1">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Второй завтрак -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Второй завтрак</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="5" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="15" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.5" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="85" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.2" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="50" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="300" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.15" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.05" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.5" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="5" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="140" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id1">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Обед -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Обед</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="65" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="8" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="5" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="10" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="140" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="180" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="400" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.3" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.1" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="180" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id1">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Полдник -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Полдник</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="72" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="10" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="15" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.7" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="30" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="35" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.5" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="80" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="250" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.2" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.09" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.8" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="150" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id1">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Ужин -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Ужин</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="7" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="12" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.9" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="50" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="90" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="75" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="30" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="110" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.7" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="420" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.25" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.1" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.9" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="170" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" id="rowend">
+                                <td class="food-composition__add add-field">
+                                    <img src="{% static 'img/Arrow.png' %}" alt="" class="add-field__arrow">
+                                    <div class="add-field__text">Добавить</div>
+                                    <div class="add-field__hidden new-list">
+                                        <div class="new-list__subblock">
+                                            <a href="#popup" class="new-list__ingredients-link">
+                                                <div class="new-list__ingredients">
+                                                    <div class="new-list__text">Ингредиенты</div>
+                                                </div>
+                                            </a>
+                                            <div class="new-list__line"></div>
+                                            <div class="new-list__excomposition">
+                                                <div class="new-list__text">Существующие приёмы пищи</div>
+                                            </div>
+                                            <div class="new-list__line"></div>
+                                            <div class="new-list__newcomposition">
+                                                <div class="new-list__text">Новый приём пищи</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                            </tr>
+                            <tr align="center" id="id1">
+                                <td class="food-composition__total">Итого:</td>
+                                <td><input type="number" class="weight-cell"></td>
+                                <td><input disabled value="0" type="number" class="water-cell"></td>
+                                <td><input disabled value="0" type="number" class="protein-cell"></td>
+                                <td><input disabled value="0" type="number" class="fat-cell"></td>
+                                <td><input disabled value="0" type="number" class="nshk-cell"></td>
+                                <td><input disabled value="0" type="number" class="hol-cell"></td>
+                                <td><input disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input disabled value="0" type="number" class="ugl-cell"></td>
+                                <td><input disabled value="0" type="number" class="pv-cell"></td>
+                                <td><input disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input disabled value="0" type="number" class="ash-cell"></td>
+                                <td><input disabled value="0" type="number" class="na-cell"></td>
+                                <td><input disabled value="0" type="number" class="k-cell"></td>
+                                <td><input disabled value="0" type="number" class="ca-cell"></td>
+                                <td><input disabled value="0" type="number" class="mg-cell"></td>
+                                <td><input disabled value="0" type="number" class="p-cell"></td>
+                                <td><input disabled value="0" type="number" class="fe-cell"></td>
+                                <td><input disabled value="0" type="number" class="a-cell"></td>
+                                <td><input disabled value="0" type="number" class="kar-cell"></td>
+                                <td><input disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input disabled value="0" type="number" class="te-cell"></td>
+                                <td><input disabled value="0" type="number" class="b1-cell"></td>
+                                <td><input disabled value="0" type="number" class="b2-cell"></td>
+                                <td><input disabled value="0" type="number" class="pp-cell"></td>
+                                <td><input disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input disabled value="0" type="number" class="c-cell"></td>
+                                <td><input disabled value="0" type="number" class="ec-cell"></td>
+                            </tr>
+                        </div>
+                        <!-- ***** ДЕНЬ 2 ***** -->
+                        <div id="day2" class="dayn">
+                            <tr align="center" class="title-date">
+                                <td class="title-date__datetime" colspan="29">День 2 / 28.12.2024</td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id2">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Завтрак -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Завтрак</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения (другие, чем в День 1) -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="76" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="5" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="18" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="16" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.8" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="30" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="95" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="110" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.3" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="220" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.2" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.07" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.6" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="145" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id2">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Второй завтрак -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Второй завтрак</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="14" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="19" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="40" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="80" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="115" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.5" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="50" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="300" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.1" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.04" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.6" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="130" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id2">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Обед -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Обед</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="68" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="7" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="11" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="45" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="50" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="15" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="150" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.4" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="80" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="350" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.25" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.09" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="165" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id2">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Полдник -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Полдник</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="74" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="12" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="13" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.5" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="130" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="75" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.2" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="280" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.1" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.07" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.9" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="140" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id2">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Ужин -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Ужин</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="8" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="12" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="35" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="110" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="150" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.8" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="400" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.3" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.08" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="170" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id2">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Перекус (вечерний) -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Перекус (вечерний)</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="62" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="10" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="18" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.6" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="28" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="105" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="80" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="18" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="90" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.1" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="40" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="230" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.05" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.03" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.4" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" id="rowend">
+                                <td class="food-composition__add add-field">
+                                    <img src="{% static 'img/Arrow.png' %}" alt="" class="add-field__arrow">
+                                    <div class="add-field__text">Добавить</div>
+                                    <div class="add-field__hidden new-list">
+                                        <div class="new-list__subblock">
+                                            <a href="#popup" class="new-list__ingredients-link">
+                                                <div class="new-list__ingredients">
+                                                    <div class="new-list__text">Ингредиенты</div>
+                                                </div>
+                                            </a>
+                                            <div class="new-list__line"></div>
+                                            <div class="new-list__excomposition">
+                                                <div class="new-list__text">Существующие приёмы пищи</div>
+                                            </div>
+                                            <div class="new-list__line"></div>
+                                            <div class="new-list__newcomposition">
+                                                <div class="new-list__text">Новый приём пищи</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                            </tr>
+        
+                            <tr align="center" id="id2">
+                                <td class="food-composition__total">Итого:</td>
+                                <td><input type="number" class="weight-cell"></td>
+                                <td><input disabled value="0" type="number" class="water-cell"></td>
+                                <td><input disabled value="0" type="number" class="protein-cell"></td>
+                                <td><input disabled value="0" type="number" class="fat-cell"></td>
+                                <td><input disabled value="0" type="number" class="nshk-cell"></td>
+                                <td><input disabled value="0" type="number" class="hol-cell"></td>
+                                <td><input disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input disabled value="0" type="number" class="ugl-cell"></td>
+                                <td><input disabled value="0" type="number" class="pv-cell"></td>
+                                <td><input disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input disabled value="0" type="number" class="ash-cell"></td>
+                                <td><input disabled value="0" type="number" class="na-cell"></td>
+                                <td><input disabled value="0" type="number" class="k-cell"></td>
+                                <td><input disabled value="0" type="number" class="ca-cell"></td>
+                                <td><input disabled value="0" type="number" class="mg-cell"></td>
+                                <td><input disabled value="0" type="number" class="p-cell"></td>
+                                <td><input disabled value="0" type="number" class="fe-cell"></td>
+                                <td><input disabled value="0" type="number" class="a-cell"></td>
+                                <td><input disabled value="0" type="number" class="kar-cell"></td>
+                                <td><input disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input disabled value="0" type="number" class="te-cell"></td>
+                                <td><input disabled value="0" type="number" class="b1-cell"></td>
+                                <td><input disabled value="0" type="number" class="b2-cell"></td>
+                                <td><input disabled value="0" type="number" class="pp-cell"></td>
+                                <td><input disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input disabled value="0" type="number" class="c-cell"></td>
+                                <td><input disabled value="0" type="number" class="ec-cell"></td>
+                            </tr>
+                        </div>
+                        <!-- ***** ДЕНЬ 3 ***** -->
+                        <div id="day3" class="dayn">
+                            <tr align="center" class="title-date">
+                                <td class="title-date__datetime" colspan="29">День 3 / 29.12.2024</td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id3">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Завтрак -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Завтрак</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения (другие, чем в День 2) -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="78" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="6" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="16" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="15" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.9" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="35" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="95" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="50" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.6" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="300" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.2" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.08" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.7" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="145" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id3">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Второй завтрак -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Второй завтрак</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="72" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="5" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="14" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="19" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="40" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="80" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="110" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.4" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="280" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.15" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.05" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.5" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="135" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id3">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Обед -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Обед</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="68" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="8" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="22" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="13" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.7" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="38" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="115" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="50" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="20" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="140" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.7" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="90" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="350" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.25" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.1" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="160" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id3">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Полдник -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Полдник</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="74" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="5" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="12" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="14" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="2" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.8" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="25" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="130" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="60" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="18" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="130" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.2" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="75" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="250" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.2" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.08" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.5" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="4" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="140" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" class="food-composition" id="id3">
+                                <td class="food-composition__title composition-title-field">
+                                    <!-- Ужин -->
+                                    <div class="composition-title-field__flex">
+                                        <img src="{% static 'img/pencil.png' %}" alt="" class="composition-title-field__edit">
+                                        <div class="composition-title-field__text">Ужин</div>
+                                        <img src="{% static 'img/black_cross.png' %}" alt="" class="composition-title-field__del">
+                                    </div>
+                                    <div class="composition-title-field__hidden composition-delete-block" style="display:none">
+                                        <div class="composition-delete-block__title">Точно хотите удалить?</div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subfirst">
+                                                <div class="composition-delete-block__first">Да</div>
+                                            </div>
+                                        </div>
+                                        <div class="composition-delete-block__subblock">
+                                            <div class="composition-delete-block__subsecond">
+                                                <div class="composition-delete-block__second">Нет</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Примерные значения -->
+                                <td><input oninput="multiply()" type="number" min="1" value="100" onkeydown="return event.key !== '-';" class="weight-cell"></td>
+                                <td><input oninput="multiply()" disabled value="66" type="number" class="water-cell"></td>
+                                <td><input oninput="multiply()" disabled value="7" type="number" class="protein-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="fat-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="nshk-cell"></td>
+                                <td><input oninput="multiply()" disabled value="24" type="number" class="hol-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="12" type="number" class="ugl-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="pv-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.6" type="number" class="ash-cell"></td>
+                                <td><input oninput="multiply()" disabled value="45" type="number" class="na-cell"></td>
+                                <td><input oninput="multiply()" disabled value="90" type="number" class="k-cell"></td>
+                                <td><input oninput="multiply()" disabled value="70" type="number" class="ca-cell"></td>
+                                <td><input oninput="multiply()" disabled value="22" type="number" class="mg-cell"></td>
+                                <td><input oninput="multiply()" disabled value="120" type="number" class="p-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1.5" type="number" class="fe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="100" type="number" class="a-cell"></td>
+                                <td><input oninput="multiply()" disabled value="350" type="number" class="kar-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="te-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.2" type="number" class="b1-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0.09" type="number" class="b2-cell"></td>
+                                <td><input oninput="multiply()" disabled value="1" type="number" class="pp-cell"></td>
+                                <td><input oninput="multiply()" disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input oninput="multiply()" disabled value="3" type="number" class="c-cell"></td>
+                                <td><input oninput="multiply()" disabled value="155" type="number" class="ec-cell"></td>
+                            </tr>
+                            <tr align="center" id="rowend">
+                                <td class="food-composition__add add-field">
+                                    <img src="{% static 'img/Arrow.png' %}" alt="" class="add-field__arrow">
+                                    <div class="add-field__text">Добавить</div>
+                                    <div class="add-field__hidden new-list">
+                                        <div class="new-list__subblock">
+                                            <a href="#popup" class="new-list__ingredients-link">
+                                                <div class="new-list__ingredients">
+                                                    <div class="new-list__text">Ингредиенты</div>
+                                                </div>
+                                            </a>
+                                            <div class="new-list__line"></div>
+                                            <div class="new-list__excomposition">
+                                                <div class="new-list__text">Существующие приёмы пищи</div>
+                                            </div>
+                                            <div class="new-list__line"></div>
+                                            <div class="new-list__newcomposition">
+                                                <div class="new-list__text">Новый приём пищи</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                                <td><input disabled></td>
+                            </tr>
+                            <tr align="center" id="id3">
+                                <td class="food-composition__total">Итого:</td>
+                                <td><input type="number" class="weight-cell"></td>
+                                <td><input disabled value="0" type="number" class="water-cell"></td>
+                                <td><input disabled value="0" type="number" class="protein-cell"></td>
+                                <td><input disabled value="0" type="number" class="fat-cell"></td>
+                                <td><input disabled value="0" type="number" class="nshk-cell"></td>
+                                <td><input disabled value="0" type="number" class="hol-cell"></td>
+                                <td><input disabled value="0" type="number" class="mds-cell"></td>
+                                <td><input disabled value="0" type="number" class="kp-cell"></td>
+                                <td><input disabled value="0" type="number" class="ugl-cell"></td>
+                                <td><input disabled value="0" type="number" class="pv-cell"></td>
+                                <td><input disabled value="0" type="number" class="ok-cell"></td>
+                                <td><input disabled value="0" type="number" class="ash-cell"></td>
+                                <td><input disabled value="0" type="number" class="na-cell"></td>
+                                <td><input disabled value="0" type="number" class="k-cell"></td>
+                                <td><input disabled value="0" type="number" class="ca-cell"></td>
+                                <td><input disabled value="0" type="number" class="mg-cell"></td>
+                                <td><input disabled value="0" type="number" class="p-cell"></td>
+                                <td><input disabled value="0" type="number" class="fe-cell"></td>
+                                <td><input disabled value="0" type="number" class="a-cell"></td>
+                                <td><input disabled value="0" type="number" class="kar-cell"></td>
+                                <td><input disabled value="0" type="number" class="pe-cell"></td>
+                                <td><input disabled value="0" type="number" class="te-cell"></td>
+                                <td><input disabled value="0" type="number" class="b1-cell"></td>
+                                <td><input disabled value="0" type="number" class="b2-cell"></td>
+                                <td><input disabled value="0" type="number" class="pp-cell"></td>
+                                <td><input disabled value="0" type="number" class="ne-cell"></td>
+                                <td><input disabled value="0" type="number" class="c-cell"></td>
+                                <td><input disabled value="0" type="number" class="ec-cell"></td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+                <div class="button-update">
+                    <div class="button-update__text">Сгенерировать ещё раз</div>
+                </div>
+                <div class="submit-block">
+                    <a href="/main" name="button" class="submit-block__button">
+                        Готово
+                    </a>
+                </div>
+            </form>
+            <form name="popupRacionForm" method="post" class="second-form" action="/ration/restrictions/table">
+                {% csrf_token %}
+                <div class="popup" id="popup">
+                    <div class="popup__body">
+                        <div class="popup__content">
+                            <div class="choise-block">
+                                <input type="text" class="choise-block__search" placeholder="Поиск">
+                                <div class="choise-block__ingredients ingredients-block">
+                                    <div class="ingredients-block__category">
+                                        <div class="ingredients-block__main-subblock">
+                                            <div class="ingredients-block__text-checkbox Ch">
+                                                <input type="checkbox" class="ingredients-block__checkbox" onclick="document.getElementById('checkbox1.0').checked = this.checked; document.getElementById('checkbox1.1').checked = this.checked;">
+                                                <div type="checkbox" class="ingredients-block__text">Грибы</div>
+                                            </div>
+                                            <img src="{% static 'img/Arrow.png' %}" alt="arrow" class="ingredients-block__img">
+                                        </div>
+                                        <div class="ingredients-block__subblock subblock-category" hidden>
+                                            <div class="subblock-category__subcategory-block Ch">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Грибы приморские</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Грибы Отморские</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Грибы заморские</div>
+                                            </div>
+                                            <div class="ingredients-block__category">
+                                                <div class="ingredients-block__main-subblock ">
+                                                    <div class="ingredients-block__text-checkbox Ch">
+                                                        <input id="checkbox1.0" type="checkbox" class="ingredients-block__checkbox2">
+                                                        <div type="checkbox" class="ingredients-block__text">Грибы 2</div>
+                                                    </div>
+                                                    <img src="{% static 'img/Arrow.png' %}" alt="arrow" class="ingredients-block__img">
+                                                </div>
+                                                <div class="ingredients-block__subblock subblock-category" hidden>
+                                                    <div class="subblock-category__subcategory-block Ch">
+                                                        <input id="checkbox1.1" type="checkbox" class="subblock-category__checkbox">
+                                                        <div type="checkbox" class="subblock-category__text">Грибы приморские</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ingredients-block__category">
+                                        <div class="ingredients-block__main-subblock">
+                                            <div class="ingredients-block__text-checkbox Ch2">
+                                                <input type="checkbox" class="ingredients-block__checkbox">
+                                                <div type="checkbox" class="ingredients-block__text">Овощи</div>
+                                            </div>
+                                            <img src="{% static 'img/Arrow.png' %}" alt="arrow" class="ingredients-block__img">
+                                        </div>
+                                        <div class="ingredients-block__subblock subblock-category" hidden>
+                                            <div class="subblock-category__subcategory-block Ch2">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Помидор</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch2">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Огурец</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch2">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Кабачок</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ingredients-block__category">
+                                        <div class="ingredients-block__main-subblock">
+                                            <div class="ingredients-block__text-checkbox Ch3">
+                                                <input type="checkbox" class="ingredients-block__checkbox">
+                                                <div type="checkbox" class="ingredients-block__text">Мясо</div>
+                                            </div>
+                                            <img src="{% static 'img/Arrow.png' %}" alt="arrow" class="ingredients-block__img">
+                                        </div>
+                                        <div class="ingredients-block__subblock subblock-category" hidden>
+                                            <div class="subblock-category__subcategory-block Ch3">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Жирное</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch3">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Хрупкое</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch3">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Заморское</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ingredients-block__category">
+                                        <div class="ingredients-block__main-subblock">
+                                            <div class="ingredients-block__text-checkbox Ch4">
+                                                <input type="checkbox" class="ingredients-block__checkbox">
+                                                <div type="checkbox" class="ingredients-block__text">Оливки</div>
+                                            </div>
+                                            <img src="{% static 'img/Arrow.png' %}" alt="arrow" class="ingredients-block__img">
+                                        </div>
+                                        <div class="ingredients-block__subblock subblock-category" hidden>
+                                            <div class="subblock-category__subcategory-block Ch4">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Оливки японские</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch4">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Оливки Отморские</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch4">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Оливки заморские</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch4">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Оливки еврейские</div>
+                                            </div>
+                                            <div class="subblock-category__subcategory-block Ch4">
+                                                <input type="checkbox" class="subblock-category__checkbox">
+                                                <div type="checkbox" class="subblock-category__text">Оливки пируанские</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="choise-block__line"></div>
+                                <div class="choise-block__add-ingredient ingredient-add">
+                                    <a href=""><div class="ingredient-add__checkbox"></div></a>
+                                    <div class="ingredient-add__text">Добавить ингредиент</div>
+                                </div>
+                            </div>
+                            <div class="selected-ingredients">
+                                <div class="selected-ingredients__title">выбранные ингредиенты</div>
+                                <div class="selected-ingredients__line"></div>
+                                <div class="selected-ingredients__invisible">
+                                    <div class="selected-ingredients__text">Ничего не выбрано</div>
+                                </div>
+                                <div class="selected-ingredients__line"></div>
+                            </div>
+                            <div id="inputFields">
+                                <label>Название: <input type="text" id="inputTitle" /></label>
+                                <label>Вес: <input type="number" id="inputWeight" value="1" /></label>
+                                <a href="javascript:history.back()">
+                                    <div class="submit-block">
+                                        <b onclick="addRowsBasedOnCheckboxes(rowend)">Добавить строку</b>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'JS/sozdanie_ration.js' %}"></script>
+</body>
+</html>

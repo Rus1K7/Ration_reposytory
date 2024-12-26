@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/restrictions.css' %}">
+    <title>Ограничения</title>
+</head>
+<body>   
+    <nav class="noselect">
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Редактор</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            <!-- menu_link -->
+            </div>
+            <div class="page-name">
+                <span class="page-name__title">{{form_ration_name}}</span>
+            </div>
+            <div class="big-title">Ограничения</div>
+        </div>
+    </nav>
+    <main>
+        <!-- Остальные поля модели -->
+        <section class="wrapper">
+          <div class="restriction">
+            <div class="main_restriction">        
+              <div class="restriction_christianity">
+                <a href="{% url 'ingredient_restrictions' %}" class="name_restriction">ПО ИНГРЕДИЕНТАМ</a>
+                <a href="" class="pen">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"></path>
+                  </svg>
+                </a>
+              </div>
+              <div class="restriction_select">
+                <p class="unit_title">ВЫБРАННЫЕ ОГРАНИЧЕНИЯ:<hr></p>
+                <div class="units">
+                  <input id="med" type="checkbox" value="Мед ограничение">
+                  <label for="med" class="unit">Ингредиент</label>
+                  <hr>
+                </div>
+              </div>
+            </div>
+            
+            <div class="main_restriction">        
+              <div class="restriction_christianity">
+                <a href="{% url 'religion_restrictions' %}" class="name_restriction">РЕЛИГИОЗНЫЕ</a>
+                <a href="" class="pen">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"></path>
+                  </svg>
+                </a>
+              </div>
+              <div class="restriction_select">
+                <p class="unit_title">ВЫБРАННЫЕ ОГРАНИЧЕНИЯ:<hr></p>
+                <div class="units">
+                  <input id="med" type="checkbox" value="Мед ограничение">
+                  <label for="med" class="unit">Религия</label>
+                  <hr>
+                </div>
+              </div>
+            </div>
+            <div class="main_restriction">        
+              <div class="restriction_christianity">
+                <a href="{% url 'medical_restrictions' %}" class="name_restriction">МЕДИЦИНСКИЕ</a>
+                <a href="" class="pen">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"></path>
+                  </svg>
+                </a>
+              </div>
+              <div class="restriction_select">
+                <p class="unit_title">ВЫБРАННЫЕ ОГРАНИЧЕНИЯ:<hr></p>
+                <div class="units">
+                  <input id="med" type="checkbox" value="Мед ограничение">
+                  <label for="med" class="unit">Медицинские</label>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>       
+      </div>
+      <form action="{% url 'sozdanie_ration' %}" method="GET">
+        {% csrf_token %}
+        <button type="submit" class="button">Сформировать рацион</button>
+      </form>
+    </main>
+</body>
+</html>

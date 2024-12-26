@@ -1,0 +1,82 @@
+[
+  {
+    "model": "rationapp.ingredient",
+    "pk": 1,
+    "fields": {
+      "name": "Молоко",
+      "category": "Молочные продукты"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 2,
+    "fields": {
+      "name": "Яйца",
+      "category": "Яичные продукты"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 3,
+    "fields": {
+      "name": "Рыба",
+      "category": "Рыбные продукты"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 4,
+    "fields": {
+      "name": "Мясо",
+      "category": "Мясные продукты"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 5,
+    "fields": {
+      "name": "Орехи",
+      "category": "Орехи и семена"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 6,
+    "fields": {
+      "name": "Морепродукты",
+      "category": "Морепродукты"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 7,
+    "fields": {
+      "name": "Соя",
+      "category": "Бобовые"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 8,
+    "fields": {
+      "name": "Глютен",
+      "category": "Злаки"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 9,
+    "fields": {
+      "name": "Цитрусовые",
+      "category": "Фрукты"
+    }
+  },
+  {
+    "model": "rationapp.ingredient",
+    "pk": 10,
+    "fields": {
+      "name": "Мёд",
+      "category": "Подсластители"
+    }
+  }
+]

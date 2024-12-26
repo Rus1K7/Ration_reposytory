@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'CSS/registration.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="/main" class="menu__link" tabindex="1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="{% url 'ration' %}" class="menu__link" tabindex="2">Рационы</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="3">О нас</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex="4">Контакты</a>
+                </div>
+                <img src="{% static 'img/sound.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            </div>
+        </div>
+        <div class="page-name">
+            <div class="food-restrictions__title">Регистрация</div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <div>
+                <img class="c" 
+                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGntfrDaO7qA6yme4fN6zkePqXRgwh_LGm0JPl1mUf3jpLYF8oWhjZJS-on2hllsDwGGQ&usqp=CAU" 
+                     style="width:160px;height:160px;" 
+                     name="picture" id="picture">
+            </div>
+            <div class="container">
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+
+                <form method="POST" action="{% url 'registration' %}">
+                    {% csrf_token %}
+                    <input type="text" class="p" placeholder="ФИО" maxlength="45" name="fio" id="FIO"><br><br><br>
+                    <input type="text" class="p" placeholder="Роль" maxlength="45" name="role" id="Role"><br><br><br>
+                    <input type="text" class="p" placeholder="Должность" maxlength="45" name="post" id="Post"><br><br><br>
+                    <input type="email" class="p" placeholder="Электронная почта" maxlength="45" name="email" id="Email"><br><br><br>
+                    <input type="password" class="p" placeholder="Пароль" maxlength="45" name="password" id="Password"><br><br><br>
+                    <div class="container2">
+                        <button type="submit" class="button button-blue" id="register-button">
+                            Зарегистрировать
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div> 
+        <div class="Modal" id="myModal" style="display: none;">
+            <div class="Modal-Window">
+                <h1 id="modal-message">Все поля обязательны для заполнения</h1>
+                <button class="btn-close" id="close-modal">X</button>
+            </div>
+        </div>                     
+    </main>
+    <script src="{% static 'JS/registration.js' %}"></script>
+</body>
+</html>

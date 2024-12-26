@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width? initial-scale=1.0">
+    <title>Архив</title>
+    <link rel="stylesheet" href="{% static 'CSS/arhiv.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="main" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Настройки</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/question.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            </div>
+        </div>
+        <div class="page-name">
+            <div class="block-main">
+                <a class="block-main__subblock">Архив</a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <form>             
+                <div class="prohibited-ingredients">
+                    <div class="choise-block">
+                            <div class="unit"> <!-- универсальный блок селекта-->
+                                <input id="text-to-find" autofocus type="text" class="food-restrictions__string" placeholder="Поиск по исполнителю">
+                                <img src="{% static 'img/pencil.svg' %}" alt="" class="page-name__img2">
+                            </div>
+                        <div class="choise-block__ingredients ingredients-block">
+                            <a href="arhiv_koncretnogo_techn?text=Технолог 1" class="block-child Ch">
+                                <label id="r1" class="block-child__subblock">Технолог 1</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Технолог 2" class="block-child Ch">
+                                <label class="block-child__subblock">Технолог 2</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Технолог 3" class="block-child Ch">
+                                <label class="block-child__subblock">Технолог 3</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Технолог 4" class="block-child Ch">
+                                <label class="block-child__subblock">Технолог 4</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Технолог 5" class="block-child Ch">
+                                <label class="block-child__subblock">Технолог 5</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Технолог 6" class="block-child Ch">
+                                <label class="block-child__subblock">Рыба</label>
+                            </a>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="actions">
+                    <div class="choise-block">
+                        <div class="food-restrictions3">
+                            <div class="unit"> <!-- универсальный блок селекта-->
+                                <input type="text" class="food-restrictions__string2" placeholder="Поиск по заказчику">
+                                <img src="{% static 'JS/pencil.js' %}" alt="" class="page-name__img2">
+                            </div>
+                        </div>
+                        <div class="choise-block__ingredients ingredients-block">
+                            <a href="arhiv_koncretnogo_techn?text=Заказчик 1" class="block-child Ch2">
+                                <label class="block-child__subblock">Заказчик 1</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Заказчик 2" class="block-child Ch2">
+                                <label class="block-child__subblock">Заказчик 2</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Заказчик 3" class="block-child Ch2">
+                                <label class="block-child__subblock">Заказчик 3</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Заказчик 4" class="block-child">
+                                <label class="block-child__subblock">Заказчик 4</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Заказчик 5" class="block-child Ch2">
+                                <label class="block-child__subblock">Заказчик 5</label>
+                            </a>
+                            <a href="arhiv_koncretnogo_techn?text=Заказчик 6" class="block-child Ch2">
+                                <label class="block-child__subblock">Заказчик 6</label>
+                            </a>
+                        </div>
+                    </div>  
+                </div>       
+            </form>
+        </div>
+        </main>
+        <script src="{% static 'JS/arhiv.js' %}"></script>
+</body>
+</html>

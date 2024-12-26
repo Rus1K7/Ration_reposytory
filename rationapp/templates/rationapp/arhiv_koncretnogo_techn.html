@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width? initial-scale=1.0">
+    <title>Архив конкретного технолога</title>
+    <link rel="stylesheet" href="{% static 'CSS/arhiv_koncretnogo_techn.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="extra-block">
+            <div class="menu">
+                <div class="menu__title logo-block">
+                    <span class="logo-block__text">Taste</span>
+                </div>
+                <div class="menu__title">
+                    <a href="main" class="menu__link" tabindex = "1">Главная</a>
+                </div>
+                <div class="menu__title">
+                    <a href="arhiv" class="menu__link" tabindex = "2">Архив</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "3">Настройки</a>
+                </div>
+                <div class="menu__title">
+                    <a href="" class="menu__link" tabindex = "4">Профиль</a>
+                </div>
+                <img src="{% static 'img/sound.svg' %}" alt="" class="menu__img menu__img_margin-88">
+            </div>
+        </div>
+        <div class="page-name">
+            <div class="block-main">
+                <a class="block-main__subblock" id="myLink">Ссылка</a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="wrapper">
+            <form>             
+                <div class="prohibited-ingredients">
+                    <div class="choise-block">
+                        <a class="block-child">
+                            <div class="block-child__subblock2">Рационы</div> 
+                        </a>
+                        <div class="unit"> <!-- универсальный блок селекта-->
+                            <input type="text" class="food-restrictions__string" placeholder="Поиск по исполнителю">
+                            <img src="{% static 'img/pencil.svg' %}" alt="" class="page-name__img2">
+                        </div>
+                        <div class="choise-block__ingredients ingredients-block">
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 1</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 2</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 3</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 4</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 5</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 6</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 7</label>
+                            </a>
+                            <a href="" class="block-child2 Ch">
+                                <label class="block-child__subblock">Рацион 8</label>
+                            </a>
+                        </div>
+                    </div>  
+                </div>
+                <div class="actions">
+                    <div class="choise-block">
+                        <a class="block-child">
+                            <div class="block-child__subblock2">Пищевые компазиции</div>
+                        </a>
+                        <div class="unit"> <!-- универсальный блок селекта-->
+                            <input type="text" class="food-restrictions__string2" placeholder="Поиск по заказчику">
+                            <img src="{% static 'img/pencil.svg' %}" alt="" class="page-name__img2">
+                        </div>
+                        <div class="choise-block__ingredients ingredients-block">
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 1</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 2</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 3</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 4</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 5</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 6</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 7</label>
+                            </a>
+                            <a href="" class="block-child2 Ch2">
+                                <label class="block-child__subblock">ПК 8</label>
+                            </a>
+                        </div>
+                    </div> 
+                </div>       
+            </form>
+        </div>
+        </main>
+        <script src="{% static 'JS/arhiv_koncretnogo_techn.js' %}"></script>
+        <script>
+            // Получение значения параметра 'text' из URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const text = urlParams.get('text');
+        
+            // Отображение текста в теге <a>
+            const linkElement = document.getElementById('myLink');
+            linkElement.textContent = text;
+        </script>
+</body>
+</html>
