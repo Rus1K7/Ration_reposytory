@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=ration
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=VSsDboSiTMjh
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d ration"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://root:VSsDboSiTMjh@db:5432/ration
+      - SECRET_KEY=django-insecure-c+-^9x^adwq^t09_ame)o+-+9-igy)jugu08!*t@084qw+t9m*
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

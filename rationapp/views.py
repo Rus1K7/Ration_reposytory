@@ -4,6 +4,9 @@ from rationapp.models import ration,general,ingredients, composition, people
 from django.contrib import messages
 from django.contrib.auth import authenticate 
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 import random
 import string
@@ -56,73 +59,133 @@ def bas_inf_about_ration_func(request):
     rations = ration.objects.all()
     return render(request, 'rationapp/bas_inf_about_ration.html', context={'rations':rations})
 
-def registration_func(request):
+@csrf_exempt
+def registration(request):
     if request.method == 'POST':
-        fio = request.POST.get('fio')
-        role = request.POST.get('role')
-        post = request.POST.get('post')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        # Проверка на пустые поля
-        if not all([fio, role, post, email, password]):
-            return JsonResponse({'success': False, 'error': 'Все поля обязательны для заполнения.'}, status=400)
-
         try:
-            # Создаем запись в people
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                fio = data.get('fio')
+                role = data.get('role')
+                post = data.get('post')
+                email = data.get('email')
+                password = data.get('password')
+            else:
+                fio = request.POST.get('fio')
+                role = request.POST.get('role')
+                post = request.POST.get('post')
+                email = request.POST.get('email')
+                password = request.POST.get('password')
+
+            if not all([fio, role, post, email, password]):
+                return JsonResponse({'success': False, 'error': 'Все поля обязательны для заполнения.'}, status=400)
+
             new_person = people(fio=fio, role=role, position=post, email=email)
             new_person.save()
-
-            # Создаем учетную запись пользователя
             user = User.objects.create_user(username=fio, email=email, password=password)
             user.save()
-
-            # Успешная регистрация
             return JsonResponse({'success': True}, status=200)
+
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
-    return render(request, 'rationapp/registration.html')
+    return JsonResponse({'success': False, 'error': 'Метод не разрешен'}, status=405)
 
-def restrictions_func(request):
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def restrictions(request):
     if request.method == 'POST':
-        form_ration_name = request.POST.get('ration-name')
-        request.session['ration-name'] = form_ration_name
-        
-        if ration.objects.exists():
-            new_id = ration.objects.last().id_ration + 1
-        else:
-            new_id = 1
+        try:
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                form_ration_name = data.get('ration-name')
+                organisation_name = data.get('organisation-name')
+                ration_text = data.get('Ration-textarea')
+                calendar_date = data.get('calendar-date')
+                count_meal_days = data.get('count-meal-days')
+                count_ration_date = data.get('count-ration-date')
+                technologist = data.get('technologist')
+            else:
+                form_ration_name = request.POST.get('ration-name')
+                organisation_name = request.POST.get('organisation-name')
+                ration_text = request.POST.get('Ration-textarea')
+                calendar_date = request.POST.get('calendar-date')
+                count_meal_days = request.POST.get('count-meal-days')
+                count_ration_date = request.POST.get('count-ration-date')
+                technologist = request.POST.get('technologist')
 
-        # Создание нового объекта рациона
-        ration_obj = ration(
-            id_ration=new_id,
-            name=form_ration_name,
-            organization=request.POST.get('organisation-name'),
-            description=request.POST.get('Ration-textarea'),
-            date=request.POST.get('calendar-date'),
-            count_pp=request.POST.get('count-meal-days'),
-            count_day=request.POST.get('count-ration-date'),
-            technologist=request.POST.get('technologist')
-        )
-        ration_obj.save()
-        return redirect('restrictions')
+            request.session['ration-name'] = form_ration_name
 
-    # Получаем выбранные ингредиенты из сессии
+            if ration.objects.exists():
+                new_id = ration.objects.last().id_ration + 1
+            else:
+                new_id = 1
+
+            ration_obj = ration(
+                id_ration=new_id,
+                name=form_ration_name,
+                organization=organisation_name,
+                description=ration_text,
+                date=calendar_date,
+                count_pp=count_meal_days,
+                count_day=count_ration_date,
+                technologist=technologist
+            )
+            ration_obj.save()
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Ration created successfully',
+                'ration_id': new_id
+            }, status=200)
+
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
     selected_ingredients = request.session.get('selected_ingredients', [])
-    
-    # Если есть выбранные ингредиенты, формируем строку для отображения
-    ingredient_display = ', '.join(selected_ingredients) if selected_ingredients else 'Ингредиент'
-    
-    context = {
-        'ingredient_display': ingredient_display
-    }
-    return render(request, 'rationapp/restrictions.html', context)
+    return JsonResponse({
+        'success': True,
+        'selected_ingredients': selected_ingredients,
+        'ingredient_display': ', '.join(selected_ingredients) if selected_ingredients else 'No ingredients selected'
+    }, status=200)
 
+
+@csrf_exempt  # Disable CSRF for testing (remove in production)
 def medical_restrictions_func(request):
-        form_ration_name = request.POST.get('ration-name')
-        request.session['ration-name'] = form_ration_name
-        return render(request,'rationapp/medical_restrictions.html', context={"form_ration_name":form_ration_name})
+    if request.method == 'POST':
+        try:
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                form_ration_name = data.get('ration-name')
+            else:
+                form_ration_name = request.POST.get('ration-name')
+
+            request.session['ration-name'] = form_ration_name
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Ration name stored successfully',
+                'ration_name': form_ration_name
+            }, status=200)
+
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+    stored_ration_name = request.session.get('ration-name', 'No ration name stored')
+    return JsonResponse({
+        'success': True,
+        'ration_name': stored_ration_name,
+        'message': 'Current ration name retrieved from session'
+    }, status=200)
 
 def religion_restrictions_func(request):
         form_ration_name = request.POST.get('ration-name')

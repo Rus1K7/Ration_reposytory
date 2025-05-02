@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from rationapp.views import (
     vhod_func, arhiv_func, arhiv_koncretnogo_techn_func, glav_techn_func,
-    bas_inf_about_ration_func, registration_func, restrictions_func,
+    bas_inf_about_ration_func, registration, restrictions,
     medical_restrictions_func, religion_restrictions_func, ingredient_restructions_func,
     sozdanie_ration_func, sozdanie_pk_func, sozdanie_ration_for_pk_func, redact_ration_func,
     delete_ration
@@ -35,8 +35,8 @@ urlpatterns = [
     path('arhiv/<int:technologist_id>/', arhiv_func, name='arhiv_technologist'),
     path('main/', glav_techn_func, name='main'),
     path('ration/', bas_inf_about_ration_func, name='ration'),
-    path('ration/registration/', registration_func, name='registration'),
-    path('registration/', registration_func, name='registration'),
+    path('ration/registration/', registration, name='registration'),
+    path('registration/', registration, name='registration'),
     path('ration/restrictions/medical/', medical_restrictions_func, name='medical_restrictions'),
     path('ration/restrictions/religion/', religion_restrictions_func, name='religion_restrictions'),
     path('ration/restrictions/ingredients/', ingredient_restructions_func, name='ingredient_restrictions'),
@@ -50,7 +50,7 @@ urlpatterns = [
     # главная страница
     path('main/ration/', bas_inf_about_ration_func, name='main_ration'),
     # ограничения
-    path('ration/restrictions/', restrictions_func, name='restrictions'),
+    path('ration/restrictions/', restrictions, name='restrictions'),
     # ограничения по ингредиентам
     path('ration/restrictions/ingredient_restructions/', ingredient_restructions_func, name='ingredient_restrictions'),
     # ограничения по медицинским показаниям
