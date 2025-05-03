@@ -187,20 +187,118 @@ def medical_restrictions_func(request):
         'message': 'Current ration name retrieved from session'
     }, status=200)
 
-def religion_restrictions_func(request):
-        form_ration_name = request.POST.get('ration-name')
-        request.session['ration-name'] = form_ration_name
-        return render(request,'rationapp/religion_restrictions.html', context={"form_ration_name":form_ration_name})
 
+@csrf_exempt  # Disable CSRF for testing (remove in production)
+def religion_restrictions_func(request):
+    if request.method == 'POST':
+        try:
+            # Handle both form-data and JSON input
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                form_ration_name = data.get('ration-name')
+            else:
+                form_ration_name = request.POST.get('ration-name')
+
+            if not form_ration_name:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'ration-name is required'
+                }, status=400)
+
+            # Store in session
+            request.session['ration-name'] = form_ration_name
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Ration name stored successfully',
+                'data': {
+                    'ration_name': form_ration_name
+                }
+            }, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'success': False,
+                'error': 'Invalid JSON data'
+            }, status=400)
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+    # Handle GET request
+    stored_ration_name = request.session.get('ration-name')
+    return JsonResponse({
+        'success': True,
+        'message': 'Current ration name retrieved',
+        'data': {
+            'ration_name': stored_ration_name
+        }
+    }, status=200)
+
+
+@csrf_exempt  # Disable CSRF for testing (remove in production)
 def ingredient_restructions_func(request):
     if request.method == 'POST':
-        # Получаем выбранные ограничения из формы
-        selected_ingredients = request.POST.getlist('ingredients[]')
-        # Сохраняем их в сессии
-        request.session['selected_ingredients'] = selected_ingredients
-        return redirect('restrictions')
-    form_ration_name = request.session['ration-name']
-    return render(request,'rationapp/ingredient_restructions.html', context={"form_ration_name":form_ration_name})
+        try:
+            # Handle both JSON and form-data input
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                selected_ingredients = data.get('ingredients', [])
+            else:
+                selected_ingredients = request.POST.getlist('ingredients[]', [])
+
+            # Validate at least one ingredient was selected
+            if not selected_ingredients:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'At least one ingredient must be selected'
+                }, status=400)
+
+            # Store in session
+            request.session['selected_ingredients'] = selected_ingredients
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Ingredients stored successfully',
+                'data': {
+                    'ingredients': selected_ingredients,
+                    'count': len(selected_ingredients)
+                }
+            }, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'success': False,
+                'error': 'Invalid JSON data'
+            }, status=400)
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+
+    # Handle GET request
+    try:
+        form_ration_name = request.session['ration-name']
+        selected_ingredients = request.session.get('selected_ingredients', [])
+
+        return JsonResponse({
+            'success': True,
+            'data': {
+                'ration_name': form_ration_name,
+                'ingredients': selected_ingredients,
+                'ingredient_display': ', '.join(
+                    selected_ingredients) if selected_ingredients else 'No ingredients selected'
+            }
+        }, status=200)
+
+    except KeyError:
+        return JsonResponse({
+            'success': False,
+            'error': 'Ration name not found in session'
+        }, status=400)
 
 def sozdanie_ration_func(request):
     form_ration_name = request.session['ration-name']
