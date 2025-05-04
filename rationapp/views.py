@@ -7,10 +7,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-
 import random
 import string
-import re
+from rest_framework.authtoken.models import Token
 
 form_ration_name = None
 
@@ -25,12 +24,12 @@ def generate_unique_code(model, field, length=12):
 def delete_ration(request, ration_id):
     ration_to_delete = get_object_or_404(ration, id_ration=ration_id)
     ration_to_delete.delete()
-    return redirect('main')  
+    return JsonResponse({'success': True}, status=200)
 
 def glav_techn_func(request):
     rations = ration.objects.all()
     compositions = composition.objects.all()
-    return render(request, 'rationapp/glav_techn.html', context={'rations':rations, 'compositions':compositions})
+    return JsonResponse({'rations':rations, 'compositions':compositions}, status=200)
 
 def bas_inf_about_ration_func(request):
     if request.method == 'POST':
@@ -54,10 +53,10 @@ def bas_inf_about_ration_func(request):
         )
         ration_obj.save()
         
-        return redirect('restrictions')  # Перенаправляем сразу на страницу restrictions
+        return redirect('restrictions')
         
     rations = ration.objects.all()
-    return render(request, 'rationapp/bas_inf_about_ration.html', context={'rations':rations})
+    return JsonResponse({'rations':rations}, status=200)
 
 @csrf_exempt
 def registration(request):
@@ -91,9 +90,6 @@ def registration(request):
 
     return JsonResponse({'success': False, 'error': 'Метод не разрешен'}, status=405)
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
 
 @csrf_exempt
 def restrictions(request):
@@ -300,9 +296,10 @@ def ingredient_restructions_func(request):
             'error': 'Ration name not found in session'
         }, status=400)
 
+@csrf_exempt
 def sozdanie_ration_func(request):
     form_ration_name = request.session['ration-name']
-    return render(request,'rationapp/sozdanie_ration.html',context={"form_ration_name":form_ration_name})
+    return JsonResponse({'rations': form_ration_name}, safe=False)
 
 def sozdanie_pk_func(request):
     generals = general.objects.all().prefetch_related("ingredients")
@@ -313,22 +310,18 @@ def sozdanie_pk_func(request):
     }
 
     if request.method == 'POST':
-        # Получение и обработка списка ингредиентов
         ingredient_data = request.POST.get('ingredient_list', '').strip()
         if not ingredient_data:
             context['error'] = 'Список ингредиентов пуст.'
-            return render(request, 'rationapp/sozdanie_pk.html', context)
 
         ingredient_list = [item.split(';') for item in ingredient_data.split('|') if item]
 
         unique_code = generate_unique_code(composition, 'code')
 
-        # Проверка уникальности имени
         composition_name = request.POST.get("name_pc")
         if composition.objects.filter(name=composition_name).exists():
             composition_name = f"{composition_name}_{random.randint(1, 1000)}"
 
-        # Создание нового объекта
         comp = composition(
             code=unique_code,
             name=composition_name,
@@ -337,9 +330,9 @@ def sozdanie_pk_func(request):
         comp.save()
 
         context['success'] = 'Композиция успешно создана!'
-        return render(request, 'rationapp/sozdanie_pk.html', context)
+        return JsonResponse({'context': context}, safe=False)
 
-    return render(request, 'rationapp/sozdanie_pk.html', context)
+    return JsonResponse({'success': False, 'error': 'Метод не разрешен'}, status=405)
 
 def sozdanie_ration_for_pk_func(request):
     return render(request,'rationapp/sozdanie_ration_for_pk.html')
@@ -347,30 +340,51 @@ def sozdanie_ration_for_pk_func(request):
 def redact_ration_func(request):
     return render(request,'rationapp/redact_ration.html')
 
-
+@csrf_exempt
 def vhod_func(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(f"POST запрос: username={username}, password={password}")
+        try:
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                username = data.get('username')
+                password = data.get('password')
+            else:
+                username = request.POST.get('username')
+                password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            print(f"Успешная аутентификация пользователя: {username}")
-            return JsonResponse({'success': True}, status=200)
-        else:
-            print(f"Ошибка аутентификации: {username}, password={password}")
-            return JsonResponse({'error': 'Неверное имя пользователя или пароль'}, status=401)
-    print("GET запрос на /vhod/")
-    return render(request, 'rationapp/vhod.html')
+            if not username or not password:
+                return JsonResponse({'success': False, 'error': 'Имя пользователя и пароль обязательны'}, status=400)
 
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                # Создаем или получаем существующий токен для пользователя
+                token, created = Token.objects.get_or_create(user=user)
+                print(f"Успешная аутентификация пользователя: {username}")
+                return JsonResponse({
+                    'success': True,
+                    'token': token.key,
+                    'user_id': user.pk,
+                    'username': user.username
+                }, status=200)
+            else:
+                print(f"Ошибка аутентификации: {username}")
+                return JsonResponse({'success': False, 'error': 'Неверное имя пользователя или пароль'}, status=401)
 
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Неверный формат JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Используйте POST-запрос'}, status=405)
+
+@csrf_exempt
 def arhiv_func(request, technologist_id=None):
     if technologist_id:
-        rations = ration.objects.filter(technologist__icontains=technologist_id)
+        rations = ration.objects.filter(technologist__icontains=technologist_id).values()
     else:
-        rations = ration.objects.all()
-    return render(request, 'rationapp/arhiv.html', context={'rations': rations})
+        rations = ration.objects.all().values()
+    rations_list = list(rations)
+    return JsonResponse({'rations': rations_list}, safe=False)
 
 def arhiv_koncretnogo_techn_func(request):
     return render(request,'rationapp/arhiv_koncretnogo_techn.html')
