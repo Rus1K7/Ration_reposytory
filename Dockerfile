@@ -1,17 +1,13 @@
-FROM python:3.11-alpine
+FROM python:3.11-slim
 
-RUN apk update \
-    && apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev \
-    && apk add --no-cache libpq
+RUN apt-get update && apt-get install -y netcat-openbsd gcc libpq-dev && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-RUN pip install --upgrade pip \
-    && pip install django \
-    && pip install psycopg2
+WORKDIR /code
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x wait_for_db.sh
 
-CMD ["sh", "entrypoint.sh"]
+CMD ["./wait_for_db.sh"]

@@ -109,11 +109,7 @@ WSGI_APPLICATION = 'ration_of_nutrition.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'chemical_composition',
-        # 'USER': 'root',
-        # 'PASSWORD': '',
-        # 'HOST': 'localhost',
-        # 'PORT': '3306',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
