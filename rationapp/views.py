@@ -31,6 +31,7 @@ def glav_techn_func(request):
     compositions = composition.objects.all()
     return JsonResponse({'rations':rations, 'compositions':compositions}, status=200)
 
+@csrf_exempt
 def bas_inf_about_ration_func(request):
     if request.method == 'POST':
         form_ration_name = request.POST.get('ration-name')
