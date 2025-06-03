@@ -56,7 +56,7 @@ def bas_inf_about_ration_func(request):
         
         return redirect('restrictions')
         
-    rations = ration.objects.all()
+    rations = list(ration.objects.all().values())
     return JsonResponse({'rations':rations}, status=200)
 
 @csrf_exempt
