@@ -13,6 +13,7 @@ from rest_framework.authtoken.models import Token
 
 form_ration_name = None
 
+@csrf_exempt
 def generate_unique_code(model, field, length=12):
     """Генерация уникального кода для модели."""
     characters = string.ascii_letters + string.digits
@@ -21,11 +22,13 @@ def generate_unique_code(model, field, length=12):
         unique_code = ''.join(random.choices(characters, k=length))
     return unique_code
 
+@csrf_exempt
 def delete_ration(request, ration_id):
     ration_to_delete = get_object_or_404(ration, id_ration=ration_id)
     ration_to_delete.delete()
     return JsonResponse({'success': True}, status=200)
 
+@csrf_exempt
 def glav_techn_func(request):
     rations = ration.objects.all()
     compositions = composition.objects.all()
@@ -302,6 +305,7 @@ def sozdanie_ration_func(request):
     form_ration_name = request.session['ration-name']
     return JsonResponse({'rations': form_ration_name}, safe=False)
 
+@csrf_exempt
 def sozdanie_pk_func(request):
     generals = general.objects.all().prefetch_related("ingredients")
     ingredients_list = ingredients.objects.all()
@@ -335,9 +339,11 @@ def sozdanie_pk_func(request):
 
     return JsonResponse({'success': False, 'error': 'Метод не разрешен'}, status=405)
 
+@csrf_exempt
 def sozdanie_ration_for_pk_func(request):
     return render(request,'rationapp/sozdanie_ration_for_pk.html')
 
+@csrf_exempt
 def redact_ration_func(request):
     return render(request,'rationapp/redact_ration.html')
 
@@ -387,5 +393,6 @@ def arhiv_func(request, technologist_id=None):
     rations_list = list(rations)
     return JsonResponse({'rations': rations_list}, safe=False)
 
+@csrf_exempt
 def arhiv_koncretnogo_techn_func(request):
     return render(request,'rationapp/arhiv_koncretnogo_techn.html')
